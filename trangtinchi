@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đại học Kiến Trúc Hà Nội</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* ==================== RESET & CẤU HÌNH CHUNG ==================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333333;
+            background-color: #ffffff;
+        }
+        a {
+            text-decoration: none;
+            color: #1d7088;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==================== 1. MÀN HÌNH ĐĂNG NHẬP (MẶC ĐỊNH HIỂN THỊ) ==================== */
+        #login-screen {
+            display: block;
+            min-height: 100vh;
+            background-color: #ffffff;
+        }
+        .login-top-bar {
+            background: linear-gradient(to bottom, #4a90d9 0%, #3b82d6 100%);
+            height: 76px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0 0 60px;
+            position: relative;
+            border-bottom: 1px solid #3273be;
+        }
+        .login-brand {
+            display: flex;
+            align-items: center;
+        }
+        .login-logo-circle {
+            width: 64px;
+            height: 64px;
+            margin-right: 36px;
+            flex-shrink: 0;
+        }
+        .login-school-name {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 21px;
+            font-weight: bold;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .login-clock-wrap {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            height: 36px;
+            padding-right: 10px;
+        }
+        .login-clock-white-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 36px;
+            background-color: #eef5fc;
+            border-bottom-left-radius: 18px;
+            z-index: 1;
+        }
+        .login-clock-text {
+            position: relative;
+            z-index: 2;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            color: #0b588c;
+            white-space: nowrap;
+        }
+
+        /* Bố cục khu vực giữa trang Đăng nhập */
+        .login-main-area {
+            max-width: 980px;
+            margin: 58px auto 40px auto;
+            position: relative;
+            padding: 0 15px;
+        }
+        .login-stage {
+            position: relative;
+            min-height: 410px;
+        }
+        .login-photo-card {
+            width: 550px;
+            height: 372px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+            border: 1px solid #ddd;
+            background-color: #f9f6e5;
+            position: relative;
+            z-index: 1;
+        }
+        .login-photo-card svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Khung viền cam bên phải (đè nhẹ lên cạnh phải bức ảnh) */
+        .login-box-column {
+            position: absolute;
+            top: 32px;
+            left: 506px;
+            width: 318px;
+            z-index: 2;
+        }
+        .login-form-frame {
+            border: 1px solid #f0ad4e;
+            border-radius: 12px;
+            padding: 36px 34px 22px 46px;
+            background: rgba(255, 255, 255, 0.25);
+        }
+        .ig-row {
+            display: flex;
+            width: 100%;
+            margin-bottom: 12px;
+            height: 34px;
+        }
+        .ig-addon {
+            width: 38px;
+            height: 34px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        .ig-control {
+            flex: 1;
+            height: 34px;
+            padding: 6px 10px;
+            font-size: 13.5px;
+            color: #555;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 0 4px 4px 0;
+            outline: none;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        }
+        .ig-control:focus {
+            border-color: #66afe9;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px rgba(102, 175, 233, .6);
+        }
+        select.ig-control {
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+        }
+        .forgot-pw-wrap {
+            padding-left: 62px;
+            margin: 6px 0 14px 0;
+            line-height: 1.35;
+        }
+        .forgot-pw-wrap a {
+            color: #21718f;
+            font-weight: bold;
+            font-size: 12.5px;
+        }
+        .login-btn-pair {
+            display: flex;
+            justify-content: center;
+            padding-left: 22px;
+        }
+        .btn-hau-login {
+            background-color: #5bc0de;
+            border: 1px solid #46b8da;
+            color: #ffffff;
+            padding: 6px 11px;
+            font-size: 13px;
+            border-radius: 4px 0 0 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        .btn-hau-login:hover {
+            background-color: #31b0d5;
+            border-color: #269abc;
+        }
+        .btn-hau-home {
+            background-color: #d9534f;
+            border: 1px solid #d43f3a;
+            color: #ffffff;
+            padding: 6px 11px;
+            font-size: 13px;
+            border-radius: 0 4px 4px 0;
+            margin-left: -1px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        .btn-hau-home:hover {
+            background-color: #c9302c;
+            border-color: #ac2925;
+        }
+        #login-error-msg {
+            color: #d9534f;
+            font-size: 12.5px;
+            margin-top: 10px;
+            padding-left: 10px;
+            display: none;
+            font-weight: bold;
+        }
+        .security-note-box {
+            margin-top: 18px;
+            margin-left: 44px;
+            width: 235px;
+            background-color: #fcf8e3;
+            border: 1px solid #faebcc;
+            border-radius: 3px;
+            padding: 10px 12px;
+            color: #66512c;
+            font-size: 12.5px;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 880px) {
+            .login-top-bar { padding-left: 15px; }
+            .login-school-name { font-size: 15px; }
+            .login-photo-card { width: 100%; max-width: 550px; margin: 0 auto; height: auto; aspect-ratio: 550/372; }
+            .login-box-column { position: static; width: 100%; max-width: 340px; margin: 20px auto 0 auto; }
+            .login-form-frame { padding: 25px 20px; background: #fff; }
+            .security-note-box { margin: 15px auto 0 auto; width: 100%; }
+        }
+
+        /* ==================== 2. MÀN HÌNH CỔNG THÔNG TIN (SAU ĐĂNG NHẬP) ==================== */
+        #portal-screen {
+            display: none;
+            min-height: 100vh;
+            background-color: #eeeeee;
+        }
+
+        /* Banner họa tiết trống đồng phía trên */
+        .portal-top-banner {
+            background-color: #f8f8f8;
+            background-image: radial-gradient(#dcdcdc 1px, transparent 1px), radial-gradient(#e5e5e5 1px, #f8f8f8 1px);
+            background-size: 26px 26px;
+            background-position: 0 0, 13px 13px;
+            border-bottom: 1px solid #dddddd;
+            padding: 10px 0 14px 0;
+        }
+        .portal-container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .banner-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .banner-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .banner-right-tools {
+            text-align: right;
+            margin-left: auto;
+        }
+        .top-quick-links {
+            font-size: 13px;
+            color: #1d5987;
+            margin-bottom: 12px;
+        }
+        .top-quick-links a {
+            color: #1d5987;
+            padding: 0 8px;
+        }
+        .top-search-box {
+            position: relative;
+            width: 265px;
+            margin-left: auto;
+        }
+        .top-search-box input {
+            width: 100%;
+            height: 32px;
+            padding: 4px 32px 4px 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 13px;
+            background: #fff;
+        }
+        .top-search-box i {
+            position: absolute;
+            right: 9px;
+            top: 7px;
+            color: #888;
+            font-size: 16px;
+        }
+
+        /* Thanh điều hướng màu xanh đậm 1 hàng ngang */
+        .portal-navbar {
+            background-color: #2e5090;
+            color: #ffffff;
+            padding: 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-single-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nav-menu-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px 14px;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-menu-list li a {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 12.5px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 2px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .nav-menu-list li a:hover {
+            color: #ffeb3b;
+            text-decoration: none;
+        }
+        .nav-menu-list li a.kbyt-link {
+            color: #b8cbe8;
+        }
+        .nav-menu-list li a.kbyt-link:hover {
+            color: #ffffff;
+        }
+        .nav-icon-box {
+            font-size: 19px;
+            display: inline-block;
+        }
+        .user-status-widget {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 12.5px;
+            cursor: pointer;
+            text-align: center;
+            flex-shrink: 0;
+            line-height: 1.3;
+        }
+        .user-status-widget:hover {
+            color: #ffd54f;
+        }
+        .welcome-subbar {
+            background-color: #eeeeee;
+            font-size: 12.5px;
+            color: #444;
+            padding: 3px 0 6px 0;
+            overflow: hidden;
+        }
+
+        /* Chuyển đổi giữa các View trong Cổng */
+        .portal-view {
+            display: none;
+            padding-bottom: 40px;
+        }
+        .portal-view.active {
+            display: block;
+        }
+
+        /* ==================== VIEW 1: TRANG CHỦ (3 CỘT CHUẨN ẢNH) ==================== */
+        .home-3cols {
+            display: flex;
+            gap: 18px;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+        .home-col {
+            flex: 1;
+            min-width: 300px;
+            background: #ffffff;
+            border: 1px solid #e2e2e2;
+            display: flex;
+            flex-direction: column;
+        }
+        .home-col-header {
+            padding: 12px 15px;
+            font-weight: bold;
+            font-size: 13.5px;
+            color: #333;
+            border-bottom: 1px solid #eeeeee;
+            text-transform: uppercase;
+        }
+        .hc-yellow { border-top: 3px solid #f1c40f; }
+        .hc-green { border-top: 3px solid #009a66; }
+        .hc-red { border-top: 3px solid #c9302c; }
+
+        .home-col-body {
+            padding: 15px 15px 12px 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .hau-news-item {
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 1px dotted #dcdcdc;
+        }
+        .hau-news-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .hau-item-thumb {
+            width: 54px;
+            height: 54px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .hau-item-text {
+            flex: 1;
+            font-size: 13px;
+            line-height: 1.38;
+        }
+        .hau-item-text a {
+            color: #216a94;
+            display: inline;
+        }
+        .spiky-new-wrap {
+            float: right;
+            margin-left: 6px;
+            margin-top: 2px;
+            width: 40px;
+            height: 28px;
+        }
+        .news-date-right {
+            text-align: right;
+            font-size: 11.5px;
+            color: #333;
+            margin-top: 6px;
+        }
+        .news-date-red {
+            color: #d9534f;
+            font-weight: bold;
+        }
+        .view-all-row {
+            text-align: right;
+            padding-top: 4px;
+            font-size: 12.5px;
+        }
+        .view-all-row a {
+            color: #216a94;
+        }
+
+        /* Khung Video hướng dẫn & Lịch Tháng 10 2026 */
+        .video-mock-frame {
+            position: relative;
+            background: #e9eef2;
+            border: 1px solid #ccc;
+            height: 196px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .video-mock-frame svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .calendar-section {
+            margin-top: 18px;
+            border-top: 1px solid #eeeeee;
+            padding-top: 18px;
+        }
+        .cal-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 12.5px;
+        }
+        .cal-table th.cal-nav {
+            padding: 6px 4px 12px 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+        .cal-table th.cal-dow {
+            padding: 6px 2px;
+            font-weight: bold;
+            color: #333;
+            font-size: 12px;
+        }
+        .cal-table td {
+            padding: 7px 2px;
+            color: #333;
+            border-radius: 3px;
+        }
+        .cal-table td.cal-faded {
+            color: #dcdcdc;
+        }
+        .cal-table td.cal-muted {
+            color: #8c8c8c;
+        }
+        .cal-table td.cal-today {
+            background: linear-gradient(to bottom, #fceabb 0%, #f8d568 100%);
+            border: 1px solid #e6b84c;
+            font-weight: bold;
+            color: #222;
+        }
+
+        /* ==================== VIEW 2: THÔNG TIN CÁ NHÂN (MỘC MẠC CƠ BẢN) ==================== */
+        .profile-paper {
+            background: #ffffff;
+            border: 1px solid #dedede;
+            padding: 20px 35px 40px 35px;
+        }
+        .profile-top-bar {
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .profile-msv-left {
+            float: left;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 15px;
+            font-weight: bold;
+            margin-left: 30px;
+        }
+        .profile-msv-left span {
+            color: red;
+            display: block;
+            margin-top: 2px;
+        }
+        .profile-btns-right {
+            float: right;
+        }
+        .btn-edit-info {
+            background-color: #ebaa4b;
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 6px;
+            border-radius: 3px;
+        }
+        .btn-change-pw {
+            background-color: #d44942;
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .profile-main-heading {
+            clear: both;
+            text-align: center;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 24px;
+            font-weight: normal;
+            color: #000;
+            margin: 5px 0 28px 0;
+            text-transform: uppercase;
+        }
+        .classic-row {
+            clear: both;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .classic-col {
+            float: left;
+            padding-right: 22px;
+        }
+        .col-w25 { width: 25%; }
+        .col-w33 { width: 33.3333%; }
+        .col-w50 { width: 50%; }
+        .col-w75 { width: 75%; }
+        .col-w100 { width: 100%; }
+
+        @media (max-width: 768px) {
+            .col-w25, .col-w33, .col-w50, .col-w75 { width: 100%; padding-right: 0; margin-bottom: 10px; }
+        }
+
+        .lbl-serif {
+            font-family: "Times New Roman", Times, serif;
+            font-weight: bold;
+            font-size: 15px;
+            color: #000;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .lbl-serif-inline {
+            font-family: "Times New Roman", Times, serif;
+            font-weight: bold;
+            font-size: 15px;
+            color: #000;
+            margin-right: 12px;
+        }
+        .val-serif-inline {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 15px;
+            color: #111;
+        }
+        .val-red-serif {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 15px;
+            color: red;
+        }
+        .classic-input {
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #555;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        .family-panel {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-top: 15px;
+            background: #ffffff;
+        }
+        .family-panel-head {
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 15px;
+            font-family: "Times New Roman", Times, serif;
+            font-weight: bold;
+            font-size: 15px;
+            text-transform: uppercase;
+            color: #000;
+        }
+        .family-panel-body {
+            padding: 18px 15px 10px 15px;
+        }
+
+        /* ==================== VIEW 3: XEM ĐIỂM (BẢNG ĐIỂM 24 MÔN B+ TRỞ LÊN) ==================== */
+        .grades-wrapper {
+            background: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+        }
+        .grades-top-title {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            color: #31708f;
+            font-size: 14px;
+            background-color: #fbfbfb;
+            border-radius: 4px 4px 0 0;
+        }
+        .grades-inner {
+            padding: 20px 20px 35px 20px;
+            overflow-x: auto;
+        }
+        .vote-alert-line {
+            text-align: center;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 24px;
+        }
+        .vote-alert-line a {
+            color: #2b669a;
+        }
+        .summary-metrics-grid {
+            width: 92%;
+            margin: 0 auto 15px auto;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 15px;
+        }
+        .sm-row {
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .sm-cell {
+            float: left;
+            width: 25%;
+        }
+        @media (max-width: 768px) {
+            .sm-cell { width: 50%; margin-bottom: 6px; }
+        }
+        .sm-label {
+            font-weight: bold;
+            color: #000;
+        }
+        .sm-val {
+            font-weight: bold;
+            color: red;
+            margin-left: 12px;
+        }
+        .sm-val-block {
+            font-weight: bold;
+            color: red;
+            display: block;
+            padding-left: 35px;
+            margin-top: 2px;
+        }
+        .explain-table {
+            width: 68%;
+            margin-left: 4%;
+            border-collapse: collapse;
+            margin-bottom: 22px;
+            font-size: 14px;
+        }
+        .explain-table td {
+            border: 1px solid #ddd;
+            padding: 8px 10px;
+            color: #333;
+        }
+        .filter-bar {
+            text-align: center;
+            margin: 20px 0 25px 0;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .filter-bar select {
+            font-family: Arial, sans-serif;
+            font-weight: normal;
+            font-size: 14px;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 0 20px 0 10px;
+            color: #555;
+            min-width: 170px;
+        }
+        .list-sub-header {
+            color: #2b669a;
+            font-family: "Times New Roman", Times, serif;
+            font-weight: bold;
+            font-size: 15px;
+            margin: 15px 0 18px 4%;
+        }
+        .hau-grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            font-size: 13.5px;
+            margin-top: 10px;
+        }
+        .hau-grade-table thead th {
+            background-color: #2b8297;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px 6px;
+            border: 1px solid #579db0;
+            vertical-align: middle;
+        }
+        .hau-grade-table tbody td {
+            padding: 9px 8px;
+            border: 1px solid #e0e8ef;
+            text-align: center;
+            color: #333;
+            vertical-align: middle;
+        }
+        .hau-grade-table tbody td.subj-name {
+            text-align: left;
+            padding-left: 10px;
+        }
+        .hau-grade-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        .hau-grade-table tbody tr:nth-child(even) {
+            background-color: #dfeffc;
+        }
+        .elective-check {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #2b8297;
+            border-radius: 50%;
+            color: #2b8297;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===================================================================== -->
+    <!-- 1. MÀN HÌNH ĐĂNG NHẬP (HIỂN THỊ NGAY LẬP TỨC KHI MỞ TRANG)            -->
+    <!-- ===================================================================== -->
+    <div id="login-screen">
+        <!-- Thanh Header Xanh Dương -->
+        <div class="login-top-bar">
+            <div class="login-brand">
+                <!-- Logo tròn trắng Đại học Kiến trúc Hà Nội -->
+                <svg class="login-logo-circle" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="47" fill="#ffffff" stroke="#3b82d6" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="43" fill="none" stroke="#3b82d6" stroke-width="1.5"/>
+                    <path d="M22,30 L34,30 L34,58 L22,58 Z" fill="none" stroke="#3b82d6" stroke-width="5"/>
+                    <path d="M66,30 L78,30 L78,58 L66,58 Z" fill="none" stroke="#3b82d6" stroke-width="5"/>
+                    <rect x="38" y="16" width="9" height="50" fill="#3b82d6"/>
+                    <rect x="53" y="16" width="9" height="50" fill="#3b82d6"/>
+                    <path d="M20,38 Q50,62 80,38" fill="none" stroke="#3b82d6" stroke-width="5.5"/>
+                    <rect x="34" y="70" width="32" height="5" fill="#3b82d6"/>
+                    <rect x="39" y="77" width="22" height="12" fill="#3b82d6"/>
+                </svg>
+                <div class="login-school-name">TRƯỜNG ĐẠI HỌC KIẾN TRÚC HÀ NỘI</div>
+            </div>
+
+            <!-- Đồng hồ thời gian thực ở góc phải -->
+            <div class="login-clock-wrap">
+                <div class="login-clock-white-bg"></div>
+                <div class="login-clock-text" id="realtime-clock">Thứ 2 ngày 26 / 10 / 2026 12:44:58</div>
+            </div>
+        </div>
+
+        <!-- Khu vực Ảnh trường & Khung Đăng nhập -->
+        <div class="login-main-area">
+            <div class="login-stage">
+                <!-- Khung ảnh tòa nhà trường ĐH Kiến trúc Hà Nội bên trái -->
+                <div class="login-photo-card">
+                    <svg viewBox="0 0 550 372" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="vintageSky" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#f7f2c4"/>
+                                <stop offset="60%" stop-color="#fdfbe2"/>
+                                <stop offset="100%" stop-color="#efe6b2"/>
+                            </linearGradient>
+                            <linearGradient id="redRoof" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#d24b32"/>
+                                <stop offset="50%" stop-color="#b5331d"/>
+                                <stop offset="100%" stop-color="#7c1d10"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Bầu trời nắng vàng hoài cổ -->
+                        <rect width="550" height="372" fill="url(#vintageSky)"/>
+
+                        <!-- Cột cờ và Lá cờ Tổ quốc bay trên nóc tòa nhà -->
+                        <line x1="255" y1="78" x2="256" y2="155" stroke="#555" stroke-width="2"/>
+                        <path d="M235,88 Q246,83 255,95 Q245,107 231,105 Z" fill="#da251d"/>
+                        <polygon points="245,93 246.5,96.5 250,96.5 247,98.5 248,102 245,100 242,102 243,98.5 240,96.5 243.5,96.5" fill="#ffff00"/>
+
+                        <!-- Khối kiến trúc chính tòa nhà HAU (góc nghiêng phối cảnh) -->
+                        <polygon points="88,185 550,128 550,248 88,268" fill="#f7f4d9" stroke="#d5cfa8" stroke-width="1"/>
+                        <polygon points="88,200 550,152 550,168 88,212" fill="#e9e4be"/>
+
+                        <!-- Các ô hànhlang tối phía dưới biển tên trường -->
+                        <polygon points="105,222 152,218 152,250 105,253" fill="#1b2618"/>
+                        <polygon points="164,217 218,212 218,247 164,250" fill="#1b2618"/>
+                        <polygon points="232,210 292,205 292,243 232,246" fill="#1b2618"/>
+                        <polygon points="308,203 376,197 376,239 308,242" fill="#1b2618"/>
+                        <polygon points="392,195 466,188 466,234 392,238" fill="#1b2618"/>
+                        <polygon points="482,186 548,180 548,230 482,234" fill="#1b2618"/>
+
+                        <!-- Logo HAU gắn trên mặt tiền tòa nhà -->
+                        <g transform="translate(103, 182) skewY(-6)">
+                            <rect x="0" y="0" width="28" height="26" rx="2" fill="#1b355a" stroke="#e5d380" stroke-width="1.5"/>
+                            <circle cx="14" cy="13" r="9" fill="none" stroke="#ffd700" stroke-width="1.5"/>
+                            <line x1="11" y1="6" x2="11" y2="20" stroke="#ffd700" stroke-width="2"/>
+                            <line x1="17" y1="6" x2="17" y2="20" stroke="#ffd700" stroke-width="2"/>
+                        </g>
+
+                        <!-- Dòng chữ nổi TRƯỜNG ĐẠI HỌC KIẾN TRÚC HÀ NỘI trên mặt tiền -->
+                        <g transform="translate(140, 198) rotate(-5.7)">
+                            <text x="1" y="1" font-family="Arial, sans-serif" font-size="19.5" font-weight="900" fill="#1a2c38" letter-spacing="0.5">TRƯỜNG ĐẠI HỌC KIẾN TRÚC HÀ NỘI</text>
+                            <text x="0" y="0" font-family="Arial, sans-serif" font-size="19.5" font-weight="900" fill="#c92a1d" letter-spacing="0.5">TRƯỜNG ĐẠI HỌC KIẾN TRÚC HÀ NỘI</text>
+                            <text x="12" y="15" font-family="Arial, sans-serif" font-size="10.2" font-weight="bold" fill="#2b3d4f" letter-spacing="1.1">HANOI ARCHITECTURAL UNIVERSITY - HAU</text>
+                        </g>
+
+                        <!-- Hàng cây xanh trang trí dọc ban công trước mái ngói -->
+                        <g fill="#233b1c">
+                            <circle cx="105" cy="256" r="14"/><circle cx="122" cy="255" r="16"/><circle cx="142" cy="255" r="14"/>
+                            <circle cx="170" cy="252" r="16"/><circle cx="192" cy="251" r="18"/><circle cx="215" cy="250" r="15"/>
+                            <circle cx="246" cy="248" r="17"/><circle cx="270" cy="247" r="19"/><circle cx="295" cy="246" r="16"/>
+                            <circle cx="326" cy="244" r="18"/><circle cx="352" cy="242" r="20"/><circle cx="380" cy="241" r="17"/>
+                            <circle cx="415" cy="238" r="19"/><circle cx="445" cy="236" r="21"/><circle cx="475" cy="235" r="18"/>
+                            <circle cx="510" cy="233" r="20"/><circle cx="538" cy="232" r="19"/>
+                        </g>
+
+                        <!-- Mái ngói đỏ truyền thống đặc trưng ở tiền cảnh -->
+                        <polygon points="75,264 550,236 550,295 72,305" fill="url(#redRoof)"/>
+                        <!-- Các đường gân ngói -->
+                        <g stroke="#6b180c" stroke-width="1" opacity="0.45">
+                            <line x1="90" y1="264" x2="80" y2="305"/><line x1="110" y1="263" x2="100" y2="305"/>
+                            <line x1="130" y1="262" x2="120" y2="304"/><line x1="150" y1="261" x2="140" y2="304"/>
+                            <line x1="170" y1="260" x2="160" y2="303"/><line x1="190" y1="258" x2="180" y2="303"/>
+                            <line x1="210" y1="257" x2="200" y2="302"/><line x1="230" y1="256" x2="220" y2="302"/>
+                            <line x1="250" y1="255" x2="240" y2="301"/><line x1="270" y1="254" x2="260" y2="301"/>
+                            <line x1="290" y1="253" x2="280" y2="300"/><line x1="310" y1="251" x2="300" y2="300"/>
+                            <line x1="330" y1="250" x2="320" y2="299"/><line x1="350" y1="249" x2="340" y2="299"/>
+                            <line x1="370" y1="248" x2="360" y2="298"/><line x1="390" y1="247" x2="380" y2="298"/>
+                            <line x1="410" y1="245" x2="400" y2="297"/><line x1="430" y1="244" x2="420" y2="297"/>
+                            <line x1="450" y1="243" x2="440" y2="296"/><line x1="470" y1="242" x2="460" y2="296"/>
+                            <line x1="490" y1="241" x2="480" y2="295"/><line x1="510" y1="239" x2="500" y2="295"/>
+                            <line x1="530" y1="238" x2="520" y2="295"/>
+                        </g>
+
+                        <!-- Phần bóng đổ sẫm dưới chân mái ngói -->
+                        <polygon points="0,302 550,292 550,372 0,372" fill="#0d1112"/>
+                        <polygon points="0,282 78,282 75,372 0,372" fill="#111617"/>
+                    </svg>
+                </div>
+
+                <!-- Cột Form Đăng nhập viền cam bên phải -->
+                <div class="login-box-column">
+                    <div class="login-form-frame">
+                        <form id="hau-login-form" autocomplete="off">
+                            <!-- Dòng 1: Chọn vai trò Sinh Viên -->
+                            <div class="ig-row">
+                                <span class="ig-addon" style="color: #ff9800;">
+                                    <i class="fa fa-home"></i>
+                                </span>
+                                <select class="ig-control" id="login-role">
+                                    <option value="sv" selected>Sinh Viên</option>
+                                    <option value="gv">Giảng Viên</option>
+                                </select>
+                            </div>
+
+                            <!-- Dòng 2: Ô nhập Tài khoản (Để trống hoàn toàn, không có chữ gợi ý) -->
+                            <div class="ig-row">
+                                <span class="ig-addon" style="color: #0275d8;">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                                <input type="text" id="username" class="ig-control" autocomplete="off">
+                            </div>
+
+                            <!-- Dòng 3: Ô nhập Mật khẩu (Để trống hoàn toàn, không có chữ gợi ý) -->
+                            <div class="ig-row">
+                                <span class="ig-addon" style="color: #666666;">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                                <input type="password" id="password" class="ig-control" autocomplete="off">
+                            </div>
+
+                            <!-- Quên mật khẩu -->
+                            <div class="forgot-pw-wrap">
+                                <a href="javascript:void(0)">[ Quên mật khẩu<br>sinh viên]</a>
+                            </div>
+
+                            <!-- Cặp nút Đăng nhập & Trang chủ dính liền -->
+                            <div class="login-btn-pair">
+                                <button type="submit" class="btn-hau-login">
+                                    <i class="fa fa-sign-in"></i> Đăng nhập
+                                </button>
+                                <button type="button" class="btn-hau-home" onclick="enterPortalHomeAsGuest()">
+                                    <i class="fa fa-home"></i> Trang chủ
+                                </button>
+                            </div>
+
+                            <div id="login-error-msg">Tài khoản hoặc mật khẩu không chính xác!</div>
+                        </form>
+                    </div>
+
+                    <!-- Hộp Lưu ý bảo mật màu vàng nhạt phía dưới -->
+                    <div class="security-note-box">
+                        <i class="fa fa-exclamation-triangle" style="color: #8a6d3b;"></i>
+                        <strong>Lưu ý bảo mật:</strong> Không đăng nhập tài khoản ở các ứng dụng hoặc website không rõ nguồn gốc để tránh bị đánh cắp thông tin tài khoản.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- 2. MÀN HÌNH CỔNG THÔNG TIN CHÍNH (HIỂN THỊ SAU KHI ĐĂNG NHẬP)          -->
+    <!-- ===================================================================== -->
+    <div id="portal-screen">
+        <!-- Banner họa tiết trống đồng trên cùng -->
+        <div class="portal-top-banner">
+            <div class="portal-container banner-flex">
+                <div class="banner-logo-area" onclick="showPortalView('home')">
+                    <svg width="52" height="52" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#1e5799" stroke-width="4"/>
+                        <path d="M22,30 L34,30 L34,58 L22,58 Z" fill="none" stroke="#1e5799" stroke-width="5"/>
+                        <path d="M66,30 L78,30 L78,58 L66,58 Z" fill="none" stroke="#1e5799" stroke-width="5"/>
+                        <rect x="38" y="16" width="9" height="50" fill="#1e5799"/>
+                        <rect x="53" y="16" width="9" height="50" fill="#1e5799"/>
+                        <path d="M20,38 Q50,62 80,38" fill="none" stroke="#1e5799" stroke-width="5.5"/>
+                        <rect x="34" y="70" width="32" height="5" fill="#1e5799"/>
+                        <rect x="39" y="77" width="22" height="12" fill="#1e5799"/>
+                    </svg>
+                    <div>
+                        <div style="font-family: 'Times New Roman', serif; font-weight: bold; font-size: 18px; color: #1d5987; text-transform: uppercase;">
+                            TRƯỜNG ĐẠI HỌC KIẾN TRÚC HÀ NỘI
+                        </div>
+                        <div style="font-size: 12px; color: #2b669a; font-weight: bold;">
+                            CỔNG THÔNG TIN ĐÀO TẠO TÍN CHỈ - TINCHIHAU.COM
+                        </div>
+                    </div>
+                </div>
+
+                <div class="banner-right-tools">
+                    <div class="top-quick-links">
+                        <a href="javascript:void(0)">Lịch tuần</a> |
+                        <a href="javascript:void(0)">E-mail</a> |
+                        <a href="javascript:void(0)">Liên hệ</a> |
+                        <a href="javascript:void(0)">Sơ đồ trang</a>
+                    </div>
+                    <div class="top-search-box">
+                        <input type="text" placeholder="Tìm kiếm">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thanh điều hướng màu xanh đậm (1 hàng ngang giống ảnh mẫu) -->
+        <div class="portal-navbar">
+            <div class="portal-container nav-single-row">
+                <ul class="nav-menu-list">
+                    <li><a onclick="showPortalView('home')"><i class="fa fa-home nav-icon-box"></i> TRANG CHỦ</a></li>
+                    <li><a onclick="showPortalView('home')"><i class="fa fa-book nav-icon-box"></i> CHƯƠNG TRÌNH ĐÀO TẠO</a></li>
+                    <li><a onclick="showPortalView('home')"><i class="fa fa-list-alt nav-icon-box"></i> ĐĂNG KÍ</a></li>
+                    <li><a onclick="showPortalView('profile')"><i class="fa fa-id-card-o nav-icon-box"></i> THÔNG TIN CÁ NHÂN</a></li>
+                    <li><a onclick="showPortalView('grades')" title="Xem điểm học phần"><i class="fa fa-calendar-check-o nav-icon-box"></i> ĐÁNH GIÁ</a></li>
+                    <li><a onclick="showPortalView('grades')"><i class="fa fa-table nav-icon-box"></i> XEM ĐIỂM</a></li>
+                    <li><a onclick="showPortalView('home')"><i class="fa fa-credit-card nav-icon-box"></i> TÀI CHÍNH</a></li>
+                    <li><a onclick="showPortalView('home')"><i class="fa fa-user-md nav-icon-box"></i> DỊCH VỤ</a></li>
+                    <li><a onclick="showPortalView('home')" class="kbyt-link"><i class="fa fa-file-text-o nav-icon-box"></i> KHAI BÁO Y TẾ</a></li>
+                </ul>
+
+                <div class="user-status-widget" id="portal-user-box" onclick="logoutToLoginScreen()" title="Bấm để đăng xuất">
+                    <i class="fa fa-user-circle" style="font-size: 26px;"></i>
+                    <div id="portal-user-label">
+                        Phạm Ngọc Quang<br>2025TL
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dòng chữ chào mừng chạy ngang -->
+        <div class="welcome-subbar">
+            <div class="portal-container">
+                <marquee scrollamount="5">Chào mừng quý vị đến với Cổng thông tin của trường</marquee>
+            </div>
+        </div>
+
+        <!-- VÙNG NỘI DUNG CHÍNH CỦA CỔNG -->
+        <div class="portal-container">
+
+            <!-- ================= VIEW 1: TRANG CHỦ (HIỆN ĐẦU TIÊN KHI ĐĂNG NHẬP) ================= -->
+            <div id="view-home" class="portal-view active">
+                <div class="home-3cols">
+                    <!-- Cột 1: Tin tức mới nhất (5 mục + Xem tất cả) -->
+                    <div class="home-col">
+                        <div class="home-col-header hc-yellow">
+                            <i class="fa fa-suitcase"></i> TIN TỨC MỚI NHẤT
+                        </div>
+                        <div class="home-col-body">
+                            <div>
+                                <!-- Tin 1 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <svg class="spiky-new-wrap" viewBox="0 0 60 44">
+                                                <polygon points="30,2 36,10 46,5 45,15 56,16 49,24 57,31 46,33 48,42 37,37 31,43 25,36 14,41 16,31 5,30 13,22 6,14 17,14 16,4 25,10" fill="#d4ff00" stroke="#1b4f9c" stroke-width="2"/>
+                                                <text x="30" y="26" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="900" fill="#d61b1b" transform="rotate(-18 30 22)">NEW!</text>
+                                            </svg>
+                                            <a href="javascript:void(0)">DANH SÁCH SINH VIÊN KHÓA 26 NỘP CHỨNG CHỈ NGOẠI NGỮ QUY ĐỔI ĐIỂM HỌC PHẦN NGOẠI NGỮ CƠ BẢN</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right news-date-red"><i class="fa fa-clock-o"></i> 23/ 10/ 2026</div>
+                                </div>
+
+                                <!-- Tin 2 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <svg class="spiky-new-wrap" viewBox="0 0 60 44">
+                                                <polygon points="30,2 36,10 46,5 45,15 56,16 49,24 57,31 46,33 48,42 37,37 31,43 25,36 14,41 16,31 5,30 13,22 6,14 17,14 16,4 25,10" fill="#d4ff00" stroke="#1b4f9c" stroke-width="2"/>
+                                                <text x="30" y="26" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="900" fill="#d61b1b" transform="rotate(-18 30 22)">NEW!</text>
+                                            </svg>
+                                            <a href="javascript:void(0)">Thông báo về kì thi TOEIC Placement Test tại Trường ĐH Kiến Trúc Hà Nội vào ngày 25-10-2026 và ngày 22-11-2026</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right news-date-red"><i class="fa fa-clock-o"></i> 20/ 10/ 2026</div>
+                                </div>
+
+                                <!-- Tin 3 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <a href="javascript:void(0)">Thông báo triển khai cuộc thi “Sinh viên trường Đại học Kiến trúc Hà Nội với ý tưởng khởi nghiệp” năm 2026 (HAU_STARTUP – 2026)</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right"><i class="fa fa-clock-o"></i> 29/ 09/ 2026</div>
+                                </div>
+
+                                <!-- Tin 4 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <a href="javascript:void(0)">Thông báo Thời khóa biểu bổ sung buổi tối (Đợt 5) học kì I năm học 2026- 2027</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right"><i class="fa fa-clock-o"></i> 25/ 09/ 2025</div>
+                                </div>
+
+                                <!-- Tin 5 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <a href="javascript:void(0)">Thông báo Thời khóa biểu chính thức Đợt 7 ( Học kì tối) năm học 2026 -2027</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right"><i class="fa fa-clock-o"></i> 18/ 09/ 2025</div>
+                                </div>
+                            </div>
+
+                            <div class="view-all-row">
+                                <a href="javascript:void(0)">Xem tất cả</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cột 2: Thông báo (5 mục + Xem tất cả) -->
+                    <div class="home-col">
+                        <div class="home-col-header hc-green">
+                            <i class="fa fa-bell"></i> THÔNG BÁO
+                        </div>
+                        <div class="home-col-body">
+                            <div>
+                                <!-- Thông báo 1 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <a href="javascript:void(0)">Quyết định khen thưởng sinh viên thủ khoa đầu vào năm 2026</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right"><i class="fa fa-clock-o"></i> 14/ 09/ 2026</div>
+                                </div>
+
+                                <!-- Thông báo 2 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <a href="javascript:void(0)">Thông báo về việc xét thi đua, khen thưởng học kỳ II năm học 2025 – 2026 và xét cấp học bổng KKHT học kỳ I năm học 2026 - 2027</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right"><i class="fa fa-clock-o"></i> 20/ 08/ 2026</div>
+                                </div>
+
+                                <!-- Thông báo 3 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <a href="javascript:void(0)">Quyết định khen thưởng sinh viên tốt nghiệp khóa học 2021 - 2026</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right"><i class="fa fa-clock-o"></i> 14/ 08/ 2026</div>
+                                </div>
+
+                                <!-- Thông báo 4 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <a href="javascript:void(0)">Quyết định khen thưởng Đội sinh viên tình nguyện, Hội sinh viên Trường Đại học Kiến trúc Hà Nội</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right"><i class="fa fa-clock-o"></i> 19/ 06/ 2026</div>
+                                </div>
+
+                                <!-- Thông báo 5 -->
+                                <div class="hau-news-item">
+                                    <div class="hau-news-row">
+                                        <svg class="hau-item-thumb" viewBox="0 0 100 100">
+                                            <path d="M18,28 L32,28 L32,62 L18,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <path d="M68,28 L82,28 L82,62 L68,62 Z" fill="none" stroke="#0088cc" stroke-width="6"/>
+                                            <rect x="36" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <rect x="54" y="10" width="10" height="58" fill="#0088cc"/>
+                                            <path d="M15,38 Q50,65 85,38" fill="none" stroke="#0088cc" stroke-width="7"/>
+                                            <rect x="32" y="74" width="36" height="6" fill="#0088cc"/>
+                                            <rect x="38" y="83" width="24" height="14" fill="#0088cc"/>
+                                        </svg>
+                                        <div class="hau-item-text">
+                                            <a href="javascript:void(0)">Quyết định khen thưởng sinh viên đạt giải thưởng Kiến trúc xanh sinh viên 2025</a>
+                                        </div>
+                                    </div>
+                                    <div class="news-date-right"><i class="fa fa-clock-o"></i> 19/ 06/ 2026</div>
+                                </div>
+                            </div>
+
+                            <div class="view-all-row">
+                                <a href="javascript:void(0)">Xem tất cả</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cột 3: Video hướng dẫn + Lịch Tháng 10 2026 -->
+                    <div class="home-col">
+                        <div class="home-col-header hc-red">
+                            <i class="fa fa-video-camera"></i> VIDEO HƯỚNG DẪN
+                        </div>
+                        <div class="home-col-body" style="justify-content: flex-start;">
+                            <div class="video-mock-frame">
+                                <svg viewBox="0 0 340 196" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="340" height="196" fill="#f2f5f8"/>
+                                    <rect width="340" height="44" fill="rgba(0,0,0,0.62)"/>
+                                    <rect y="44" width="340" height="20" fill="#2b8297"/>
+                                    <text x="10" y="57" fill="#fff" font-size="7.5" font-family="Arial">Thời gian</text>
+                                    <text x="115" y="57" fill="#fff" font-size="7.5" font-family="Arial">Thứ</text>
+                                    <text x="145" y="57" fill="#fff" font-size="7.5" font-family="Arial">Tiết</text>
+                                    <text x="180" y="57" fill="#fff" font-size="7.5" font-family="Arial">Phòng</text>
+                                    <text x="225" y="57" fill="#fff" font-size="7.5" font-family="Arial">Giáo viên</text>
+                                    <text x="268" y="57" fill="#fff" font-size="7.5" font-family="Arial">Còn trống</text>
+                                    <text x="304" y="57" fill="#fff" font-size="7.5" font-family="Arial">Chọn môn</text>
+
+                                    <g font-family="Arial" font-size="7" fill="#333">
+                                        <rect y="64" width="340" height="24" fill="#d9edf7"/>
+                                        <text x="20" y="75">19/06/2017-29/07/2017</text>
+                                        <text x="118" y="75">2</text>
+                                        <text x="145" y="75">4-6</text>
+                                        <text x="178" y="75">H.H 3.05</text>
+                                        <text x="275" y="75">60</text>
+                                        <rect x="308" y="68" width="20" height="11" rx="2" fill="#5cb85c"/>
+                                        <text x="310" y="76" fill="#fff" font-size="6.5">Chọn</text>
+
+                                        <rect y="88" width="340" height="24" fill="#ffffff"/>
+                                        <text x="20" y="100">19/06/2017-29/07/2017</text>
+                                        <text x="118" y="100">3</text>
+                                        <text x="145" y="100">1-3</text>
+                                        <text x="178" y="100">H.H 3.05</text>
+                                        <text x="275" y="100">60</text>
+                                        <rect x="308" y="93" width="20" height="11" rx="2" fill="#5cb85c"/>
+                                        <text x="310" y="101" fill="#fff" font-size="6.5">Chọn</text>
+
+                                        <rect y="112" width="340" height="24" fill="#d9edf7"/>
+                                        <text x="20" y="124">19/06/2017-29/07/2017</text>
+                                        <text x="118" y="124">4</text>
+                                        <text x="145" y="124">4-6</text>
+                                        <text x="178" y="124">H.H 3.05</text>
+                                        <text x="275" y="124">60</text>
+                                        <rect x="308" y="117" width="20" height="11" rx="2" fill="#5cb85c"/>
+                                        <text x="310" y="125" fill="#fff" font-size="6.5">Chọn</text>
+
+                                        <rect y="136" width="340" height="24" fill="#ffffff"/>
+                                        <text x="20" y="148">19/06/2017-29/07/2017</text>
+                                        <text x="118" y="148">3</text>
+                                        <text x="145" y="148">1-3</text>
+                                        <text x="178" y="148">H.H 3.05</text>
+                                        <text x="275" y="148">60</text>
+                                        <rect x="308" y="141" width="20" height="11" rx="2" fill="#5cb85c"/>
+                                        <text x="310" y="149" fill="#fff" font-size="6.5">Chọn</text>
+
+                                        <rect y="160" width="340" height="36" fill="#d9edf7"/>
+                                        <text x="20" y="174">19/06/2017-29/07/2017</text>
+                                        <text x="118" y="174">3</text>
+                                        <text x="145" y="174">1-3</text>
+                                        <text x="178" y="174">H.H 3.05</text>
+                                        <text x="275" y="174">60</text>
+                                        <rect x="308" y="166" width="20" height="11" rx="2" fill="#5cb85c"/>
+                                        <text x="310" y="174" fill="#fff" font-size="6.5">Chọn</text>
+                                    </g>
+
+                                    <circle cx="315" cy="74" r="14" fill="#e6ee00" opacity="0.75"/>
+                                    <polygon points="240,66 286,66 286,60 302,73 286,86 286,80 240,80" fill="#a8d08d" stroke="#4a7ebb" stroke-width="1.2"/>
+                                    <text x="244" y="75" font-family="Arial" font-size="6" fill="#1d4e89" font-weight="bold">CHỌN LỚP HỌC PHẦN</text>
+
+                                    <circle cx="36" cy="24" r="14" fill="#d9e2ec"/>
+                                    <text x="58" y="22" font-family="Arial, sans-serif" font-size="13.5" font-weight="bold" fill="#ffffff">Đăng kí học phần lớp tín chỉ Đại học k...</text>
+                                    <text x="58" y="36" font-family="Arial, sans-serif" font-size="10.5" fill="#e0e0e0">Hoa Le</text>
+
+                                    <rect x="142" y="78" width="56" height="40" rx="9" fill="#ff0000"/>
+                                    <polygon points="164,89 164,107 180,98" fill="#ffffff"/>
+                                </svg>
+                            </div>
+
+                            <!-- Lịch Tháng 10 2026 -->
+                            <div class="calendar-section">
+                                <table class="cal-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="cal-nav">&laquo;</th>
+                                            <th class="cal-nav" colspan="5">Tháng 10 2026</th>
+                                            <th class="cal-nav">&raquo;</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="cal-dow">CN</th>
+                                            <th class="cal-dow">T2</th>
+                                            <th class="cal-dow">T3</th>
+                                            <th class="cal-dow">T4</th>
+                                            <th class="cal-dow">T5</th>
+                                            <th class="cal-dow">T6</th>
+                                            <th class="cal-dow">T7</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cal-faded">27</td>
+                                            <td class="cal-muted">28</td>
+                                            <td class="cal-muted">29</td>
+                                            <td class="cal-muted">30</td>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cal-faded">4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                            <td>9</td>
+                                            <td>10</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cal-faded">11</td>
+                                            <td>12</td>
+                                            <td>13</td>
+                                            <td>14</td>
+                                            <td>15</td>
+                                            <td>16</td>
+                                            <td>17</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cal-faded">18</td>
+                                            <td>19</td>
+                                            <td>20</td>
+                                            <td>21</td>
+                                            <td>22</td>
+                                            <td>23</td>
+                                            <td>24</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cal-faded">25</td>
+                                            <td class="cal-today">26</td>
+                                            <td>27</td>
+                                            <td>28</td>
+                                            <td>29</td>
+                                            <td>30</td>
+                                            <td>31</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cal-faded">1</td>
+                                            <td class="cal-muted">2</td>
+                                            <td class="cal-muted">3</td>
+                                            <td class="cal-muted">4</td>
+                                            <td class="cal-muted">5</td>
+                                            <td class="cal-muted">6</td>
+                                            <td class="cal-muted">7</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 2: SƠ YẾU LÝ LỊCH SINH VIÊN ================= -->
+            <div id="view-profile" class="portal-view">
+                <div class="profile-paper">
+                    <div class="profile-top-bar">
+                        <div class="profile-msv-left">
+                            Mã sinh viên:
+                            <span>2553030049</span>
+                        </div>
+                        <div class="profile-btns-right">
+                            <button type="button" class="btn-edit-info">Sửa thông tin</button>
+                            <button type="button" class="btn-change-pw">Đổi mật khẩu</button>
+                        </div>
+                    </div>
+
+                    <h2 class="profile-main-heading">SƠ YẾU LÝ LỊCH SINH VIÊN</h2>
+
+                    <!-- Họ tên, Ngày sinh, Giới tính -->
+                    <div class="classic-row">
+                        <div class="classic-col col-w33">
+                            <span class="lbl-serif-inline">Họ và tên:</span>
+                            <span class="val-serif-inline">Phạm Ngọc Quang</span>
+                        </div>
+                        <div class="classic-col col-w33">
+                            <span class="lbl-serif-inline">Ngày sinh:</span>
+                            <span class="val-serif-inline">10/03/2007</span>
+                        </div>
+                        <div class="classic-col col-w33">
+                            <span class="lbl-serif-inline">Giới tính:</span>
+                            <span class="val-serif-inline">Nam</span>
+                        </div>
+                    </div>
+
+                    <!-- Số tài khoản, Tên ngân hàng -->
+                    <div class="classic-row">
+                        <div class="classic-col col-w33">
+                            <label class="lbl-serif">Số tài khoản</label>
+                            <input type="text" class="classic-input" value="21315601" readonly>
+                        </div>
+                        <div class="classic-col col-w33">
+                            <label class="lbl-serif">Tên ngân hàng</label>
+                            <input type="text" class="classic-input" value="ACB Bank" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Quốc tịch, Dân tộc, Tôn giáo -->
+                    <div class="classic-row">
+                        <div class="classic-col col-w33">
+                            <label class="lbl-serif">Quốc tịch:</label>
+                            <select class="classic-input"><option>Việt Nam</option></select>
+                        </div>
+                        <div class="classic-col col-w33">
+                            <label class="lbl-serif">Dân tộc:</label>
+                            <select class="classic-input"><option>Kinh</option></select>
+                        </div>
+                        <div class="classic-col col-w33">
+                            <label class="lbl-serif">Tôn giáo:</label>
+                            <input type="text" class="classic-input" value="Không" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Số nhà, Mã số bảo hiểm, CMND, Email -->
+                    <div class="classic-row">
+                        <div class="classic-col col-w25">
+                            <label class="lbl-serif">Số nhà</label>
+                            <input type="text" class="classic-input" value="Số 75 ngõ 79 phường Yên Ho" readonly>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <label class="lbl-serif">Mã số bảo hiểm</label>
+                            <input type="text" class="classic-input" value="4106121899" readonly>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <label class="lbl-serif">CMND:</label>
+                            <input type="text" class="classic-input" value="040207007919" readonly>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <label class="lbl-serif">Email:</label>
+                            <input type="text" class="classic-input" value="quang2007ks@gmail.com" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Hệ đào tạo, Chuyên ngành, Niên khóa, Khóa học -->
+                    <div class="classic-row" style="margin: 18px 0;">
+                        <div class="classic-col col-w25">
+                            <span class="lbl-serif-inline">Hệ đào tạo:</span>
+                            <span class="val-red-serif">Đại học - Chính quy</span>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <span class="lbl-serif">Chuyên ngành:</span>
+                            <span class="val-red-serif" style="padding-left: 8px;">Quản lý vận tải và Logistic</span>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <span class="lbl-serif-inline">Niên khóa:</span>
+                            <span class="val-red-serif">2025-2029</span>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <span class="lbl-serif-inline">Khóa học:</span>
+                            <span class="val-red-serif">2025</span>
+                        </div>
+                    </div>
+
+                    <!-- ĐT nhà riêng, ĐT cá nhân, Tỉnh/TP, Quận/Huyện -->
+                    <div class="classic-row">
+                        <div class="classic-col col-w25">
+                            <label class="lbl-serif">ĐT nhà riêng:</label>
+                            <input type="text" class="classic-input" value="" readonly>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <label class="lbl-serif">ĐT cá nhân:</label>
+                            <input type="text" class="classic-input" value="0348487529" readonly>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <label class="lbl-serif">Tỉnh/Thành phố:</label>
+                            <select class="classic-input"><option>Tỉnh Nghệ An</option></select>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <label class="lbl-serif">Quận/Huyện:</label>
+                            <select class="classic-input"><option>Huyện Quế Phong</option></select>
+                        </div>
+                    </div>
+
+                    <!-- Quê quán -->
+                    <div class="classic-row">
+                        <div class="classic-col col-w50">
+                            <label class="lbl-serif">Quê quán:</label>
+                            <input type="text" class="classic-input" value="Thượng Hiền, Kiến Xương, Thái Bình" readonly>
+                        </div>
+                    </div>
+
+                    <!-- HK thường trú, Xã/Phường -->
+                    <div class="classic-row">
+                        <div class="classic-col col-w50">
+                            <label class="lbl-serif">HK thường trú:</label>
+                            <input type="text" class="classic-input" value="" readonly>
+                        </div>
+                        <div class="classic-col col-w50">
+                            <label class="lbl-serif">Xã/Phường:</label>
+                            <input type="text" class="classic-input" value="Xã Tiền Phong" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Nơi ở hiện nay, Địa chỉ báo tin -->
+                    <div class="classic-row">
+                        <div class="classic-col col-w50">
+                            <label class="lbl-serif">Nơi ở hiện nay:</label>
+                            <input type="text" class="classic-input" value="Số 75 ngõ 79 phường Yên Hoà, quận Cầu Giấy" readonly>
+                        </div>
+                        <div class="classic-col col-w50">
+                            <label class="lbl-serif">Địa chỉ báo tin:</label>
+                            <input type="text" class="classic-input" value="Bản Long Quang - Xã Tiền Phong (Từ 01/01/2020) - Huyện Quế Pho" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Đối tượng ưu tiên, Đối tượng miễn giảm -->
+                    <div class="classic-row" style="margin-top: 10px;">
+                        <div class="classic-col col-w25">
+                            <span class="lbl-serif">Đối tượng ưu tiên:</span>
+                        </div>
+                        <div class="classic-col col-w25">
+                            <span class="lbl-serif">Đối tượng miễn giảm:</span>
+                        </div>
+                    </div>
+
+                    <!-- Khung QUAN HỆ GIA ĐÌNH -->
+                    <div class="family-panel">
+                        <div class="family-panel-head">QUAN HỆ GIA ĐÌNH</div>
+                        <div class="family-panel-body">
+                            <!-- Thông tin Cha -->
+                            <div class="classic-row">
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Họ tên cha:</label>
+                                    <input type="text" class="classic-input" value="Đã mất" readonly>
+                                </div>
+                                <div class="classic-col col-w50">
+                                    <label class="lbl-serif">Hộ khẩu thường trú:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                            </div>
+
+                            <div class="classic-row">
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Năm sinh:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Quốc tịch:</label>
+                                    <select class="classic-input"><option>Việt Nam</option></select>
+                                </div>
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Dân tộc:</label>
+                                    <select class="classic-input"><option>- Chọn -</option></select>
+                                </div>
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Tôn Giáo:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                            </div>
+
+                            <div class="classic-row">
+                                <div class="classic-col col-w50">
+                                    <label class="lbl-serif">Nghề nghiệp cha:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Thông tin Mẹ -->
+                            <div class="classic-row" style="margin-top: 10px;">
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Họ tên Mẹ:</label>
+                                    <input type="text" class="classic-input" value="Hồ Thị Minh Thuỷ" readonly>
+                                </div>
+                                <div class="classic-col col-w50">
+                                    <label class="lbl-serif">Hộ khẩu thường trú:</label>
+                                    <input type="text" class="classic-input" value="Khối Trung Sơn, thị trấn Kim Sơn, tỉnh Nghệ An" readonly>
+                                </div>
+                            </div>
+
+                            <div class="classic-row">
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Năm sinh:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Quốc tịch:</label>
+                                    <select class="classic-input"><option>Việt Nam</option></select>
+                                </div>
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Dân tộc:</label>
+                                    <select class="classic-input"><option>Kinh</option></select>
+                                </div>
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Tôn Giáo:</label>
+                                    <input type="text" class="classic-input" value="Không" readonly>
+                                </div>
+                            </div>
+
+                            <div class="classic-row">
+                                <div class="classic-col col-w50">
+                                    <label class="lbl-serif">Nghề nghiệp mẹ:</label>
+                                    <input type="text" class="classic-input" value="Giáo viên" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Thông tin Vợ/Chồng -->
+                            <div class="classic-row" style="margin-top: 10px;">
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Họ tên vợ/chồng:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                                <div class="classic-col col-w50">
+                                    <label class="lbl-serif">Hộ khẩu thường trú:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                            </div>
+
+                            <div class="classic-row">
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Quốc tịch:</label>
+                                    <select class="classic-input"><option>Việt Nam</option></select>
+                                </div>
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Dân tộc:</label>
+                                    <select class="classic-input"><option>- Chọn -</option></select>
+                                </div>
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Tôn Giáo:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                            </div>
+
+                            <div class="classic-row">
+                                <div class="classic-col col-w50">
+                                    <label class="lbl-serif">Nghề nghiệp vợ/chồng:</label>
+                                    <input type="text" class="classic-input" value="" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Số lượng Anh/Chị/Em -->
+                            <div class="classic-row">
+                                <div class="classic-col col-w25">
+                                    <label class="lbl-serif">Số lượng Anh/Chị/Em:</label>
+                                    <input type="text" class="classic-input" value="1" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 3: XEM ĐIỂM (24 MÔN TỪ B+ TRỞ LÊN) ================= -->
+            <div id="view-grades" class="portal-view">
+                <div class="grades-wrapper">
+                    <div class="grades-top-title">Thông tin chi tiết điểm sinh viên</div>
+                    <div class="grades-inner">
+                        <div class="vote-alert-line">
+                            Sinh viên cần tiến hành đánh giá môn học cần xem điểm. Click "<a href="javascript:void(0)">Vote</a>" để tiến hành đánh giá nếu chưa đánh giá !
+                        </div>
+
+                        <!-- Khối chỉ số tổng kết trên -->
+                        <div class="summary-metrics-grid">
+                            <div class="sm-row">
+                                <div class="sm-cell">
+                                    <span class="sm-label">Mã sinh viên:</span>
+                                    <span class="sm-val-block">2553030049</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">Xếp loại học tập (Hệ 4):</span>
+                                    <span class="sm-val-block">Giỏi</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">Xếp loại học tập (Hệ 10):</span>
+                                    <span class="sm-val-block">Giỏi</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">TBC học tập (Hệ 4):</span>
+                                    <span class="sm-val">3.62</span>
+                                </div>
+                            </div>
+
+                            <div class="sm-row">
+                                <div class="sm-cell">
+                                    <span class="sm-label">TBC tích lũy (Hệ 4):</span>
+                                    <span class="sm-val">3.62</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">Số tín chỉ tích lũy:</span>
+                                    <span class="sm-val">55 / 55</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">Số tín chỉ học tập:</span>
+                                    <span class="sm-val">55</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">TBC tích lũy (Hệ 10):</span>
+                                    <span class="sm-val">8.65</span>
+                                </div>
+                            </div>
+
+                            <div class="sm-row">
+                                <div class="sm-cell">
+                                    <span class="sm-label">Số tín chỉ học tập tích lũy:</span>
+                                    <span class="sm-val-block">55</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bảng chú thích A / B -->
+                        <table class="explain-table">
+                            <tr>
+                                <td style="width: 28%;">Số tín chỉ tích lũy: A / B</td>
+                                <td>
+                                    <div style="margin-bottom: 6px;">A: Tổng số tín chỉ các học phần tích lũy tính vào TBCHT Sinh viên đạt từ điểm D trở lên</div>
+                                    <div>B: Tổng số tín chỉ các học phần tính vào TBCHT Sinh viên đã học .</div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Thanh lọc Học kỳ, Năm học, Ngành học -->
+                        <div class="filter-bar">
+                            Học kỳ
+                            <select><option>--- Chọn học kỳ ---</option><option>Học kỳ 1</option><option>Học kỳ 2</option></select>
+                            Năm học
+                            <select><option>--- Chọn năm học ---</option><option>2025-2026</option><option>2026-2027</option></select>
+                            Ngành học
+                            <select><option>Chuyên ngành chính</option></select>
+                        </div>
+
+                        <div class="list-sub-header">
+                            <i class="fa fa-list-alt"></i> Danh sách điểm học phần đã học
+                        </div>
+
+                        <!-- Khối chỉ số tổng kết lặp lại phía trên bảng -->
+                        <div class="summary-metrics-grid">
+                            <div class="sm-row">
+                                <div class="sm-cell">
+                                    <span class="sm-label">Điểm khen thưởng:</span>
+                                    <span class="sm-val">0</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">Xếp loại học tập (Hệ 4):</span>
+                                    <span class="sm-val-block">Giỏi</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">Xếp loại học tập (Hệ 10):</span>
+                                    <span class="sm-val-block">Giỏi</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">TBC học tập (Hệ 4):</span>
+                                    <span class="sm-val">3.62</span>
+                                </div>
+                            </div>
+
+                            <div class="sm-row">
+                                <div class="sm-cell">
+                                    <span class="sm-label">TBC tích lũy (Hệ 4):</span>
+                                    <span class="sm-val">3.62</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">Số tín chỉ tích lũy:</span>
+                                    <span class="sm-val">55 / 55</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">Số tín chỉ học tập:</span>
+                                    <span class="sm-val">55</span>
+                                </div>
+                                <div class="sm-cell">
+                                    <span class="sm-label">TBC tích lũy (Hệ 10):</span>
+                                    <span class="sm-val">8.65</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bảng điểm 24 môn học (Tất cả đạt B+ và A) -->
+                        <table class="hau-grade-table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Ký hiệu</th>
+                                    <th>Tên học phần</th>
+                                    <th>Số tín chỉ</th>
+                                    <th>Hệ số</th>
+                                    <th>Điểm thành phần</th>
+                                    <th>Điểm thi</th>
+                                    <th>TBCHP</th>
+                                    <th>Điểm số</th>
+                                    <th>Điểm chữ</th>
+                                    <th>Môn tự chọn</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody id="grades-tbody">
+                                <!-- Dữ liệu 24 môn học được tạo tự động bằng JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ==================== ĐỒNG HỒ THỜI GIAN THỰC Ở GÓC PHẢI TRANG ĐĂNG NHẬP ====================
+        function updateLoginClock() {
+            const now = new Date();
+            const days = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+            const dayName = days[now.getDay()];
+            const d = String(now.getDate()).padStart(2, '0');
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const y = now.getFullYear();
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            const ss = String(now.getSeconds()).padStart(2, '0');
+
+            const clockEl = document.getElementById('realtime-clock');
+            if (clockEl) {
+                clockEl.textContent = `${dayName} ngày ${d} / ${m} / ${y} ${hh}:${mm}:${ss}`;
+            }
+        }
+        setInterval(updateLoginClock, 1000);
+        updateLoginClock();
+
+        // ==================== LOGIC ĐĂNG NHẬP & CHUYỂN MÀN HÌNH ====================
+        const STUDENT_ACCOUNT = {
+            username: '2553030049',
+            password: 'QuangPham1003@123',
+            fullName: 'Phạm Ngọc Quang',
+            classCode: '2025TL'
+        };
+
+        let isAuthenticated = false;
+        const loginScreen = document.getElementById('login-screen');
+        const portalScreen = document.getElementById('portal-screen');
+        const loginForm = document.getElementById('hau-login-form');
+        const loginErrorMsg = document.getElementById('login-error-msg');
+        const portalUserLabel = document.getElementById('portal-user-label');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+        function handleStudentLogin(e) {
+            if (e) e.preventDefault();
+            const u = usernameInput.value.trim();
+            const p = passwordInput.value.trim();
+
+            if (u === STUDENT_ACCOUNT.username && p === STUDENT_ACCOUNT.password) {
+                isAuthenticated = true;
+                loginErrorMsg.style.display = 'none';
+                portalUserLabel.innerHTML = `${STUDENT_ACCOUNT.fullName}<br>${STUDENT_ACCOUNT.classCode}`;
+                loginScreen.style.display = 'none';
+                portalScreen.style.display = 'block';
+                // Sau khi đăng nhập thành công, luôn mở TRANG CHỦ đầu tiên
+                showPortalView('home');
+            } else {
+                loginErrorMsg.textContent = 'Tài khoản hoặc mật khẩu không chính xác!';
+                loginErrorMsg.style.display = 'block';
+            }
+        }
+
+        loginForm.addEventListener('submit', handleStudentLogin);
+
+        [usernameInput, passwordInput].forEach(inputEl => {
+            inputEl.addEventListener('keydown', function(evt) {
+                loginErrorMsg.style.display = 'none';
+                if (evt.key === 'Enter') {
+                    handleStudentLogin(evt);
+                }
+            });
+        });
+
+        function enterPortalHomeAsGuest() {
+            loginScreen.style.display = 'none';
+            portalScreen.style.display = 'block';
+            if (!isAuthenticated) {
+                portalUserLabel.innerHTML = 'ĐĂNG NHẬP';
+            }
+            showPortalView('home');
+        }
+
+        function logoutToLoginScreen() {
+            isAuthenticated = false;
+            loginForm.reset();
+            loginErrorMsg.style.display = 'none';
+            portalScreen.style.display = 'none';
+            loginScreen.style.display = 'block';
+        }
+
+        function showPortalView(viewKey) {
+            if (!isAuthenticated && (viewKey === 'profile' || viewKey === 'grades')) {
+                logoutToLoginScreen();
+                return;
+            }
+            document.querySelectorAll('.portal-view').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById('view-' + viewKey);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
+
+        // ==================== DỮ LIỆU 24 MÔN HỌC (TẤT CẢ ĐẠT B+ HOẶC A) ====================
+        const coursesData = [
+            // 16 môn học gốc
+            { code: 'GD4501', name: 'Giáo dục thể chất P1', stc: 1, hs: 1, qt: 'QT : 10', thi: '9', tb: '9.3', so: '4', chu: 'A', elective: false },
+            { code: 'KT0101.1', name: 'Hình học hoạ hình và vẽ kĩ thuật', stc: 2, hs: 1, qt: 'QT : 8.5', thi: '8.0', tb: '8.2', so: '3.5', chu: 'B+', elective: false },
+            { code: 'TC2603.1', name: 'Toán P1', stc: 2, hs: 1, qt: 'QT : 8.5', thi: '8.0', tb: '8.2', so: '3.5', chu: 'B+', elective: false },
+            { code: 'CT3901.1', name: 'Triết học Mác - LêNin', stc: 3, hs: 1, qt: 'QT : 9.0', thi: '8.0', tb: '8.3', so: '3.5', chu: 'B+', elective: false },
+            { code: 'NN3700.1', name: 'Tiếng Anh tăng cường P1', stc: 3, hs: 1, qt: '', thi: '10', tb: '10', so: '4', chu: 'A', elective: true },
+            { code: 'NN3700.2', name: 'Tiếng Anh tăng cường P2', stc: 3, hs: 1, qt: '', thi: '10', tb: '10', so: '4', chu: 'A', elective: true },
+            { code: 'QL5514', name: 'Kinh tế học', stc: 2, hs: 1, qt: 'QT : 8.0', thi: '8.5', tb: '8.4', so: '3.5', chu: 'B+', elective: false },
+            { code: 'CT3902.1', name: 'Kinh tế chính trị Mác - Lênin', stc: 2, hs: 1, qt: 'QT : 8.5', thi: '8.0', tb: '8.2', so: '3.5', chu: 'B+', elective: false },
+            { code: 'TC2606', name: 'Xác suất thống kê', stc: 2, hs: 1, qt: 'QT : 8.0', thi: '8.5', tb: '8.4', so: '3.5', chu: 'B+', elective: false },
+            { code: 'QL4701', name: 'Kỹ năng thuyết trình', stc: 1, hs: 1, qt: 'QT : 8.5', thi: '8.5', tb: '8.5', so: '4', chu: 'A', elective: false },
+            { code: 'GD4502', name: 'Giáo dục thể chất P2', stc: 1, hs: 1, qt: 'QT : 8.0', thi: '9.0', tb: '8.7', so: '4', chu: 'A', elective: false },
+            { code: 'QL5505.1', name: 'Kinh tế đô thị', stc: 2, hs: 1, qt: 'QT : 8.0', thi: '8.2', tb: '8.1', so: '3.5', chu: 'B+', elective: false },
+            { code: 'QL4617', name: 'Khoa học quản lý và tâm lý học quản lý', stc: 2, hs: 1, qt: 'QT : 8.2', thi: '8.0', tb: '8.1', so: '3.5', chu: 'B+', elective: false },
+            { code: 'CT4102', name: 'Pháp luật đại cương', stc: 2, hs: 1, qt: 'QT : 8.5', thi: '8.0', tb: '8.2', so: '3.5', chu: 'B+', elective: false },
+            { code: 'TH4301', name: 'Tin học đại cương', stc: 2, hs: 1, qt: 'QT : 8.4', thi: '8.0', tb: '8.1', so: '3.5', chu: 'B+', elective: false },
+            { code: 'CT3902.2', name: 'Chủ nghĩa Xã hội khoa học', stc: 2, hs: 1, qt: 'QT : 8.0', thi: '8.3', tb: '8.2', so: '3.5', chu: 'B+', elective: false },
+            // 8 môn học năm 2026-2027 (mức B+)
+            { code: 'GD4503_2025TL 1', name: 'Giáo dục thể chất P3', stc: 1, hs: 1, qt: 'QT : 8.5', thi: '8.0', tb: '8.2', so: '3.5', chu: 'B+', elective: false },
+            { code: 'QL5002.2_2025TL 1', name: 'Kinh tế đầu tư 1', stc: 3, hs: 1, qt: 'QT : 8.0', thi: '8.3', tb: '8.2', so: '3.5', chu: 'B+', elective: true },
+            { code: 'QL4826_2025TL 1', name: 'Nhập môn quản lý vận tải và logistics', stc: 2, hs: 1, qt: 'QT : 8.5', thi: '8.0', tb: '8.2', so: '3.5', chu: 'B+', elective: false },
+            { code: 'QL4828_2025TL 1', name: 'Vận tải đa phương thức', stc: 2, hs: 1, qt: 'QT : 8.0', thi: '8.2', tb: '8.1', so: '3.5', chu: 'B+', elective: false },
+            { code: 'QL4827_2025TL 1', name: 'Quy hoạch giao thông vận tải', stc: 3, hs: 1, qt: 'QT : 8.5', thi: '8.2', tb: '8.3', so: '3.5', chu: 'B+', elective: false },
+            { code: 'QL4829_2025TL 1', name: 'Môi trường và Logistics xanh', stc: 2, hs: 1, qt: 'QT : 8.0', thi: '8.4', tb: '8.3', so: '3.5', chu: 'B+', elective: false },
+            { code: 'QL4832_2025TL 1', name: 'Đạo đức kinh doanh và văn hóa doanh nghiệp', stc: 2, hs: 1, qt: 'QT : 8.5', thi: '8.0', tb: '8.2', so: '3.5', chu: 'B+', elective: false },
+            { code: 'QL5561.1_2025TL 1', name: 'Nguyên lý kế toán', stc: 2, hs: 1, qt: 'QT : 8.2', thi: '8.0', tb: '8.1', so: '3.5', chu: 'B+', elective: false }
+        ];
+
+        function renderGradeRows() {
+            const tbody = document.getElementById('grades-tbody');
+            tbody.innerHTML = coursesData.map((c, idx) => `
+                <tr>
+                    <td>${idx + 1}</td>
+                    <td>${c.code}</td>
+                    <td class="subj-name">${c.name}</td>
+                    <td>${c.stc}</td>
+                    <td>${c.hs}</td>
+                    <td>${c.qt}</td>
+                    <td>${c.thi}</td>
+                    <td>${c.tb}</td>
+                    <td>${c.so}</td>
+                    <td>${c.chu}</td>
+                    <td>${c.elective ? '<span class="elective-check"><i class="fa fa-check"></i></span>' : ''}</td>
+                    <td></td>
+                </tr>
+            `).join('');
+        }
+
+        renderGradeRows();
+    </script>
+</body>
+</html>
